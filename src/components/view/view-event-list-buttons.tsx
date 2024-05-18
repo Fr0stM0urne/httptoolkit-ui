@@ -24,6 +24,7 @@ export const ClearAllButton = observer((props: {
     title={`Clear all (${Ctrl}+Shift+Delete)`}
     disabled={props.disabled}
     onClick={props.onClear}
+    id="clearAllButton"
 />);
 
 export const ExportAsHarButton = inject('accountStore')(observer((props: {
@@ -31,8 +32,8 @@ export const ExportAsHarButton = inject('accountStore')(observer((props: {
     accountStore?: AccountStore,
     events: CollectedEvent[]
 }) => {
-    const { isPaidUser } = props.accountStore!;
-
+    // const { isPaidUser } = props.accountStore!;
+    const isPaidUser = true;
     return <IconButton
         icon={['fas', 'save']}
         title={
@@ -44,16 +45,25 @@ export const ExportAsHarButton = inject('accountStore')(observer((props: {
                 )
         }
         disabled={!isPaidUser || props.events.length === 0}
-        onClick={async () => {
+        onClick={async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            let filename = e.target.parentNode.parentElement.getAttribute("fileName");
+
             const harContent = JSON.stringify(
                 await generateHar(props.events)
             );
-            const filename = `HTTPToolkit_${
-                dateFns.format(Date.now(), 'YYYY-MM-DD_HH-mm')
-            }.har`;
+
+            if (!filename) {
+                filename = `HTTPToolkit_${
+                    dateFns.format(Date.now(), 'YYYY-MM-DD_HH-mm')
+                }.har`;
+            }
 
             saveFile(filename, 'application/har+json;charset=utf-8', harContent);
         }}
+        id="exportHarButton"
     />
 }));
 
@@ -62,8 +72,8 @@ export const ImportHarButton = inject('eventsStore', 'accountStore')(
         accountStore?: AccountStore,
         eventsStore?: EventsStore
     }) => {
-        const { isPaidUser } = props.accountStore!;
-
+        // const { isPaidUser } = props.accountStore!;
+        const isPaidUser = true;
         return <IconButton
             icon={['fas', 'folder-open']}
             title={
@@ -119,6 +129,7 @@ export const PlayPauseButton = inject('eventsStore')(
             icon={['fas', isPaused ? 'play' : 'pause']}
             title={`${isPaused ? 'Resume' : 'Pause'} collecting intercepted exchanges`}
             onClick={togglePause}
+            id="pauseButton"
         />
     })
 );

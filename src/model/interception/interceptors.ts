@@ -227,7 +227,7 @@ const INTERCEPT_OPTIONS: _.Dictionary<InterceptorConfig> = {
         tags: TERMINAL_TAGS
     },
     'android-adb': {
-        name: 'Android Device via ADB',
+        name: 'Android Devices via ADB',
         description: [
             'Intercept an Android device or emulator connected to ADB',
             'Automatically injects system HTTPS certificates into rooted devices & most emulators'

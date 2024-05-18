@@ -165,15 +165,15 @@ export default <Webpack.Configuration>{
                 'wordOperations'
             ]
         }),
-        new GoogleFontsPlugin({
-            fonts: [
-                { family: "Fira Mono" },
-                { family: "Lato" }
-            ],
-            formats: ['woff2'], // Supported by Chrome, FF, Edge, Safari 12+
-            filename: 'fonts.css',
-            apiUrl: 'https://gwfh.mranftl.com/api/fonts'
-        }),
+        // new GoogleFontsPlugin({
+        //     fonts: [
+        //         { family: "Fira Mono" },
+        //         { family: "Lato" }
+        //     ],
+        //     formats: ['woff2'], // Supported by Chrome, FF, Edge, Safari 12+
+        //     filename: 'fonts.css',
+        //     apiUrl: 'https://gwfh.mranftl.com/api/fonts'
+        // }),
         new Webpack.ProvidePlugin({
             'process': 'process/browser.js',
             'Buffer': ['buffer', 'Buffer']
